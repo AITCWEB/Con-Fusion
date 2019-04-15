@@ -2,26 +2,25 @@
 @import 'variables';
 @import '../node_modules/font-awesome/scss/font-awesome';
 
-
 $lt-gray: #ddd;
-$background-dark: #512DA8;
-$background-light: #9575CD;
-$background-pale: #D1C4E9;
-$primary-color-dark: #512DA8;
-$primary-color: #673AB7;
-$primary-color-light: #D1C4E9;
-$primary-color-text: #FFFFFF;
-$accent-color: #FFC107;
+$background-dark: #512da8;
+$background-light: #9575cd;
+$background-pale: #d1c4e9;
+$primary-color-dark: #512da8;
+$primary-color: #673ab7;
+$primary-color-light: #d1c4e9;
+$primary-color-text: #ffffff;
+$accent-color: #ffc107;
 $primary-text-color: #212121;
 $secondary-text-color: #757575;
-$divider-color: #BDBDBD;
+$divider-color: #bdbdbd;
 
 @mixin zero-margin($pad-up-down, $pad-left-right) {
   margin: 0px auto;
   padding: $pad-up-down $pad-left-right;
 }
 
-// some basic resets 
+// some basic resets
 .container {
   margin: 20px;
   display: flex;
@@ -47,4 +46,15 @@ body {
 
 .flex-spacer {
   flex: 1 1 auto;
+}
+.full-width {
+  width: 95%;
+}
+
+.half-width {
+  width: 45%;
+}
+
+.form-size {
+  width: 75%;
 }
