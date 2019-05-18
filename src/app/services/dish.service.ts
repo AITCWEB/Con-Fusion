@@ -19,13 +19,13 @@ export class DishService {
 
   getDish(id: number): Observable<Dish> {
     return this.http
-      .get<Dish>(baseURL + 'dishes/' + id)
+      .get<Dish>(`${baseURL}dishes/${id}`)
       .pipe(catchError(this.phms.handleError));
   }
 
   getFeaturedDish(): Observable<Dish> {
     return this.http
-      .get<Dish[]>(baseURL + 'dishes?featured=true')
+      .get<Dish[]>(`${baseURL}dishes?featured=true`)
       .pipe(map(dishes => dishes[0]))
       .pipe(catchError(this.phms.handleError));
   }
@@ -42,7 +42,7 @@ export class DishService {
       }),
     };
     return this.http
-      .put<Dish>(baseURL + 'dishes/' + dish.id, dish, httpOptions)
+      .put<Dish>(`${baseURL}dishes/${dish.id}`, dish, httpOptions)
       .pipe(catchError(this.phms.handleError));
   }
 }

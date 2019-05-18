@@ -1,17 +1,27 @@
+import { FeedbackService } from './../services/feedback.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
+import { flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    style: 'display: block;',
+  },
+  animations: [flyInOut(), expand()],
 })
 export class ContactComponent implements OnInit {
   @ViewChild('fform') feedBackFormDirective;
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
+  hideForm = false;
+  feedbackCopy: Feedback;
+  errMsg: string;
   formErrors = {
     firstname: '',
     lastname: '',
@@ -39,7 +49,10 @@ export class ContactComponent implements OnInit {
       email: 'Email not in valid format.',
     },
   };
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private feedbackService: FeedbackService,
+  ) {
     this.createForm();
   }
 
@@ -92,9 +105,27 @@ export class ContactComponent implements OnInit {
       }
     }
   }
+
   onSubmit() {
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
+    this.feedbackService.submitFeedback(this.feedback).subscribe(
+      feedback => {
+        this.feedbackCopy = feedback;
+        this.hideForm = true;
+        if (this.feedback) {
+          setTimeout(() => {
+            this.feedbackCopy = null;
+            this.hideForm = false;
+          }, 5000);
+        }
+      },
+      errMsg => {
+        this.feedback = null;
+        this.feedbackCopy = null;
+        this.errMsg = <any>errMsg;
+      },
+    );
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
